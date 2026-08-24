@@ -15,14 +15,13 @@ Ler `montagem.md` antes de encostar em fio.
 4. Confirmar o **passo do fuso** do atuador. Define passos por milímetro e todo o ensaio de
    velocidade. Se for TR8x8, são 8 mm por volta.
 
-
 ---
 
-## Fase 2 — Bancada do motor
+## Fase 1 — Bancada do motor
 
 Não precisa da mecânica montada. Motor solto na mesa.
 
-### 2.1 Ligação
+### 1.1 Ligação
 
 1. Soldar barra de pinos fêmea na placa perfurada para o ESP32 e para o A4988.
 2. **Pull-up de 10 kΩ entre EN e VCC.** O EN é ativo em nível baixo e o GPIO fica em alta
@@ -32,7 +31,7 @@ Não precisa da mecânica montada. Motor solto na mesa.
 5. VMOT direto da fonte. Terra comum entre fonte e ESP32.
 6. STEP, DIR, SLEEP e EN nos GPIO 26, 27, 25 e 33.
 
-### 2.2 Ajuste do Vref
+### 1.2 Ajuste do Vref
 
 Com a fonte ligada e o motor parado, ajustar o trimpot do driver.
 
@@ -43,7 +42,7 @@ Dissipador colado no driver.
 
 **Nunca desconectar o motor com o driver energizado.** É a causa número um de A4988 queimado.
 
-### 2.3 Ensaio de velocidade
+### 1.3 Ensaio de velocidade
 
 `esphome run firmware/bancada-motor.yaml` e seguir `ensaio-velocidade.md`.
 
@@ -53,7 +52,7 @@ descobrir em outubro custa o semestre.
 
 ---
 
-## Fase 3 — Mecânica
+## Fase 2 — Mecânica
 
 Só depois do ensaio de velocidade aprovar.
 
@@ -67,7 +66,7 @@ Só depois do ensaio de velocidade aprovar.
 
 Regra: **nada de eletrônica acima do recipiente.** Vapor e respingo.
 
-### 3.1 Calibração de passos por milímetro
+### 2.1 Calibração de passos por milímetro
 
 Marcar o carro, comandar um número conhecido de passos, medir o deslocamento com régua.
 Repetir três vezes. Esse número converte passos em mm/min e é o que valida a especificação de
@@ -75,7 +74,7 @@ Repetir três vezes. Esse número converte passos em mm/min e é o que valida a 
 
 ---
 
-## Fase 4 — Interface
+## Fase 3 — Interface
 
 1. Soldar barra de pinos macho 2x5 em pedaço de placa perfurada e abrir os sinais de EXP1 e
    EXP2 do LCD. Os conectores são IDC e não aceitam jumper solto.
@@ -94,11 +93,11 @@ Repetir três vezes. Esse número converte passos em mm/min e é o que valida a 
 | Fase | Depende de | Prazo |
 |---|---|---|
 | 0 Compras e medidas | nada | primeira semana |
-| 2 Bancada do motor | driver chegar | uma tarde |
-| 3 Mecânica | Fase 2 aprovar | duas semanas |
-| 4 Interface | Fase 3 | uma semana |
+| 1 Bancada do motor | driver chegar | uma tarde |
+| 2 Mecânica | Fase 1 aprovar | duas semanas |
+| 3 Interface | Fase 2 | uma semana |
 
-A Fase 2 é o ponto de decisão. Nada de mecânica antes dela aprovar.
+A Fase 1 é o ponto de decisão. Nada de mecânica antes dela aprovar.
 
 O ensaio de massa de filme em lâmina de vidro, que levanta a curva de espessura contra
 velocidade, está descrito em `arquivo/pos-colheita.md`.

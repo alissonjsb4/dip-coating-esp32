@@ -24,13 +24,13 @@ Estimativas de mercado brasileiro em agosto de 2026, não cotações. Confirmar 
 | Capacitor eletrolítico 100 µF/50 V | 1 | R$ 2 | protege o driver do pico de comutação |
 | Resistor 10 kΩ | 2 | R$ 1 | pull-up do EN, pull-up do fim de curso |
 | Chave de fim de curso mecânica | 1 | R$ 5-10 | origem e segurança |
-| Placa perfurada 10x15 cm | 2 | R$ 12 | uma por nó |
-| Barra de pinos fêmea | 4 | R$ 8 | encaixe do ESP32 e do driver |
+| Placa perfurada 10x15 cm | 1 | R$ 6 | eletrônica do controlador |
+| Barra de pinos fêmea | 3 | R$ 6 | encaixe do ESP32 e do driver |
 | Borne KRE 2 vias | 4 | R$ 8 | motor e alimentação |
 | Fio rígido e flexível, jumpers | — | R$ 25 | ligações |
 | Barra de pinos macho 2x5 | 2 | R$ 4 | adaptador para EXP1/EXP2 do LCD |
 
-**Subtotal: R$ 85 a 120.**
+**Subtotal: R$ 80 a 115.**
 
 Onde: [AutoCore Robótica](https://www.autocorerobotica.com.br/) (Fortaleza, retirada em mãos,
 tem A4988 em estoque), Smart Kits, e Eletrônica Circuito na Rua Pedro Pereira 857, Centro,
@@ -57,11 +57,11 @@ para componente avulso.
 
 | Bloco | Estimativa |
 |---|---|
-| Eletrônica | R$ 85-120 |
+| Eletrônica | R$ 80-115 |
 | Instrumentação | R$ 55-80 |
 | Consumíveis de bancada | R$ 55 |
 
-**Faixa total: R$ 195 a 255.**
+**Faixa total: R$ 190 a 250.**
 
 Insumos de revestimento dependem da aplicação e não constam aqui. O levantamento de
 fornecedor de quitosana em Fortaleza está em `arquivo/pos-colheita.md`.
