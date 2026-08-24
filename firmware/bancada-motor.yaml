@@ -1,0 +1,104 @@
+# Teste de bancada: mede velocidade real do motor contra a pedida.
+# Nao usa LCD nem encoder. Objetivo unico e responder se o stepper do ESPHome
+# sustenta velocidade constante na faixa de dip coating (1 a 200 mm/min).
+#
+# Pinos provisorios. Fixar depois do teste.
+
+substitutions:
+  nome: dipcoat
+  pino_step: GPIO17
+  pino_dir: GPIO18
+  pino_sleep: GPIO19
+  pino_enable: GPIO16
+
+esphome:
+  name: ${nome}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  topic_prefix: ${nome}
+
+stepper:
+  - platform: a4988
+    id: motor
+    step_pin: ${pino_step}
+    dir_pin: ${pino_dir}
+    sleep_pin: ${pino_sleep}
+    max_speed: 200 steps/s
+    # Sem aceleracao: o teste mede velocidade constante. Rampa mascara o resultado.
+    acceleration: inf
+    deceleration: inf
+
+output:
+  # EN do A4988 e ativo em nivel baixo. Mantido habilitado durante o teste.
+  - platform: gpio
+    id: motor_enable
+    pin:
+      number: ${pino_enable}
+      inverted: true
+
+number:
+  - platform: template
+    name: passos_por_segundo
+    id: passos_por_segundo
+    optimistic: true
+    min_value: 1
+    max_value: 1000
+    step: 1
+    initial_value: 100
+    on_value:
+      then:
+        - stepper.set_speed:
+            id: motor
+            speed: !lambda "return x;"
+
+  - platform: template
+    name: passos_do_ensaio
+    id: passos_do_ensaio
+    optimistic: true
+    min_value: 100
+    max_value: 20000
+    step: 100
+    initial_value: 1000
+
+button:
+  - platform: template
+    name: mover
+    on_press:
+      then:
+        - stepper.report_position:
+            id: motor
+            position: 0
+        - stepper.set_target:
+            id: motor
+            target: !lambda "return (long) id(passos_do_ensaio).state;"
+
+  - platform: template
+    name: voltar
+    on_press:
+      then:
+        - stepper.set_target:
+            id: motor
+            target: 0
+
+sensor:
+  - platform: template
+    name: posicao
+    id: posicao
+    unit_of_measurement: passos
+    accuracy_decimals: 0
+    update_interval: 200ms
+    lambda: "return id(motor).current_position;"

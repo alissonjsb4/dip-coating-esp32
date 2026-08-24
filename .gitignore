@@ -1,0 +1,7 @@
+.esphome/
+firmware/secrets.yaml
+*.bin
+__pycache__/
+.venv/
+Thumbs.db
+.DS_Store
