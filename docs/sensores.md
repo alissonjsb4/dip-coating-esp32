@@ -4,7 +4,7 @@ Nenhum sensor entra por ser legal. Cada um responde uma pergunta do experimento.
 
 ## Nó 2, a câmara
 
-### Célula de carga 5 kg + HX711 — massa
+### Célula de carga 1 kg + HX711 — massa
 
 **Mede:** a massa da fruta, continuamente.
 
@@ -21,6 +21,9 @@ temporal para treinar modelo. **É o item de melhor retorno do projeto inteiro.*
 ligados em ponte de Wheatstone. Deformar a barra desbalanceia a ponte e gera uma diferença de
 tensão de poucos milivolts. O HX711 é um conversor A/D de 24 bits feito para esse sinal, com
 amplificador embutido. Fala com o ESP32 por dois fios (clock e dados).
+
+**Por que 1 kg e não 5 kg:** a fruta pesa de 100 a 600 g. Célula de 5 kg gasta quase toda a
+faixa sem carga e piora a resolução. Uma de 1 kg mede o mesmo intervalo com passo bem menor.
 
 **Cuidados:** precisa de calibração com massa conhecida, e deriva com temperatura. Como a
 câmara também mede temperatura, dá para corrigir. Montar a célula fixa numa base rígida,
@@ -113,11 +116,12 @@ fundamento inteiro do trabalho.
 
 | Item | Estimativa | Prioridade |
 |---|---|---|
-| Célula de carga 5 kg + HX711 | R$ 30-45 | essencial |
+| Célula de carga 1 kg + HX711 | R$ 30-45 | essencial |
+| Balança de precisão 0,01 g | R$ 25-40 | essencial, para massa de filme em lâmina |
 | DHT22 | R$ 25-40 | essencial |
 | BH1750 | R$ 15 | recomendado |
 | Chave de fim de curso | R$ 5-10 | essencial |
 | Celular como câmera | R$ 0 | essencial |
 | MH-Z19B (CO2) | R$ 150-200 | opcional |
 
-Essencial mais recomendado: **R$ 75 a 110**. Tudo disponível presencialmente em Fortaleza.
+Essencial mais recomendado: **R$ 100 a 150**. Tudo disponível presencialmente em Fortaleza.

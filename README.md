@@ -32,6 +32,7 @@ Nada validado em hardware ainda. O primeiro teste pendente é o de velocidade, d
 | Ciclo completo com MQTT | não iniciado |
 | Câmara instrumentada (massa, temperatura, UR) | não iniciado |
 | Primeiro lote de fruta revestida | não iniciado |
+| Curva de massa de filme contra velocidade | não medida |
 
 ## Uso
 
@@ -77,7 +78,7 @@ Dois nós. A máquina e a câmara são independentes e publicam no mesmo broker.
 | Função | Componente | Por quê |
 |---|---|---|
 | Controlador | ESP32 WROOM-32 (a segunda placa) | |
-| Massa | Célula de carga 5 kg + HX711 | Perda de massa é a métrica primária de conservação. Contínua em vez de pesagem diária |
+| Massa | Célula de carga 1 kg + HX711 | Perda de massa é a métrica primária de conservação. Contínua em vez de pesagem diária |
 | Temperatura e umidade | DHT22 ou SHT31 | Condição de estocagem, variável de confusão a controlar |
 | Luz | BH1750 | Feature do dataset público escolhido, e custa R$ 15 |
 | CO2 | MH-Z19B (não comprado) | Mediria a taxa respiratória. Ausente por custo, tratado por ablação de feature. Ver `docs/datasets.md` |

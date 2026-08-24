@@ -15,7 +15,7 @@ A máquina fixa essa variável. É a resposta para "por que não faz na mão".
 
 **Independentes (o que se controla)**
 - Velocidade de retirada, mm/min. É o fator principal
-- Formulação do revestimento: quitosana ou alginato, e concentração
+- Formulação do revestimento: base amido ou base gelatina, e concentração
 - Número de imersões
 - Temperatura e umidade de estocagem
 
@@ -66,7 +66,32 @@ Escolher entre manga, melão ou banana. Critérios: disponível no Ceará o ano 
 baixo, e janela de amadurecimento compatível com o calendário. Banana é a mais rápida e a
 mais barata, então é a melhor para o lote 1.
 
-## Insumos
+## Formulações
 
-Quitosana e alginato de sódio são de grau alimentício e baratos. Confirmar se o laboratório
-de alimentos ou o de química da UFC fornece antes de comprar.
+O laboratório **não** fornece quitosana nem alginato, e as professoras liberaram formulação
+alternativa para protótipo e demonstração. Isso não é concessão: amido e gelatina constam da
+própria literatura de revestimento comestível, nas famílias de polissacarídeos e proteínas.
+
+| Formulação | Insumo | Onde | Estimativa |
+|---|---|---|---|
+| Base amido | amido de milho gelatinizado, com glicerina como plastificante | supermercado e farmácia | R$ 10 |
+| Base gelatina | gelatina incolor sem sabor | supermercado | R$ 5 |
+| Base lipídica | cera de carnaúba em grau alimentício | a confirmar | a confirmar |
+
+A cera de carnaúba é a de maior interesse porque consta da lista de lipídios da literatura e
+é produto do Ceará. Só entra se aparecer em grau alimentício; a de uso em polimento costuma
+levar solvente e está fora.
+
+**Ressalva honesta a registrar no relatório:** a quitosana tem ação antifúngica que amido e
+gelatina não têm. Por isso a métrica principal é perda de massa, que responde a qualquer
+filme barreira, e decaimento por fungo entra como observação e não como resultado central.
+
+## Massa de filme depositado
+
+Para validar Landau-Levich sem depender da fruta: revestir lâminas de vidro em velocidades
+diferentes, pesar antes e depois, e levantar a curva de massa depositada contra velocidade.
+
+O filme numa lâmina pesa dezenas de miligramas, o que **não** é resolvível pela célula de
+carga de 5 kg da câmara. Usar uma balança de precisão de 0,01 g, que custa R$ 25 a 40.
+Esse ensaio é barato, rápido, independe do calendário biológico e transforma a premissa
+teórica em resultado medido.

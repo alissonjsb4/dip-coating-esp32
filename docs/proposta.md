@@ -15,9 +15,13 @@ consumo. No Ceará o problema tem peso econômico direto, porque a região produ
 manga, melão e banana.
 
 Uma das técnicas consagradas para atrasar a deterioração é a aplicação de **revestimento
-comestível** sobre a casca, com polissacarídeos como quitosana e alginato. O filme atua como
-barreira: reduz a transpiração, portanto a perda de água, e modifica a troca gasosa,
-portanto a taxa respiratória e a velocidade de amadurecimento.
+comestível** sobre a casca. O filme atua como barreira: reduz a transpiração, portanto a
+perda de água, e modifica a troca gasosa, portanto a taxa respiratória e a velocidade de
+amadurecimento.
+
+A literatura classifica os materiais formadores de filme em três famílias: polissacarídeos
+(quitosana, alginato, celulose, pectina e amido), proteínas (gelatina, zeína, proteína de
+soja, caseína) e lipídios (cera de abelha, cera de carnaúba, óleos vegetais).
 
 O método padrão de aplicação em bancada é a imersão, conhecida como dip coating.
 
@@ -44,6 +48,7 @@ tratada, empregando um modelo de inteligência computacional para prever deterio
 1. Construir um eixo motorizado de imersão com velocidade programável de 1 a 200 mm/min,
    com tempo de imersão e número de ciclos configuráveis
 2. Verificar experimentalmente a fidelidade entre velocidade comandada e velocidade real
+   e a relação entre velocidade de retirada e massa de filme depositado
 3. Instrumentar uma câmara de armazenamento com medição contínua de massa, temperatura,
    umidade e luminosidade
 4. Integrar os dois nós por MQTT, com persistência e painel de acompanhamento
@@ -90,7 +95,10 @@ linha de base, seleção de modelo e análise de erro.
 **Etapa 3, protótipo.** Montagem dos dois nós, integração por MQTT e persistência.
 
 **Etapa 4, ensaios de conservação.** Lotes de fruta divididos em tratamentos, com variação de
-velocidade de retirada e formulação, e grupo de controle sem revestimento. Acompanhamento por
+velocidade de retirada e formulação, e grupo de controle sem revestimento. As formulações
+adotadas são de base amido e de base gelatina, escolhidas por pertencerem às famílias de
+polissacarídeos e proteínas descritas na literatura, por serem de grau alimentício e por
+terem custo e disponibilidade compatíveis com o prazo do semestre. Acompanhamento por
 perda de massa contínua, condições ambientais e registro fotográfico diário.
 
 O primeiro lote é aplicado manualmente, em setembro, antes da conclusão da máquina. Isso
@@ -130,8 +138,11 @@ duas placas ESP32, acesso a solda e a impressora 3D.
 sensor de luminosidade, chave de fim de curso e material de montagem. Estimativa abaixo de
 R$ 200.
 
-**A confirmar.** Fornecimento de quitosana e alginato de sódio pelo laboratório, e empréstimo
-de sensor de CO2.
+**Formulações.** Amido de milho gelatinizado e gelatina incolor, ambos de grau alimentício e
+de aquisição direta. Não há dependência de insumo laboratorial.
+
+**A confirmar.** Empréstimo de sensor de CO2, e disponibilidade de cera de carnaúba em grau
+alimentício, que seria uma terceira formulação de interesse regional.
 
 ## 11. Riscos e mitigação
 
@@ -141,6 +152,7 @@ de sensor de CO2.
 | Atraso na montagem mecânica | Primeiro lote aplicado manualmente, sem dependência do hardware |
 | Janela curta para ensaios de prateleira | Banana no primeiro lote, por amadurecimento rápido e custo baixo |
 | Ausência do sensor de CO2 | Ablação da feature, com o custo de performance quantificado |
+| Formulação com efeito menor que o de quitosana | Perda de massa, que é a métrica primária, responde a qualquer filme barreira. O que a quitosana acrescenta é ação antifúngica, e por isso decaimento por fungo não é usado como métrica principal |
 | Deriva térmica da célula de carga | Correção pela temperatura, medida na mesma câmara |
 
 ## 12. Repositório
