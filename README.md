@@ -13,6 +13,11 @@ A parte mecânica deriva do projeto [ClubeDoHardware/dip-coating-cdh](https://gi
 da UFC, que usa STM32 em PCB própria. Esta versão troca o STM32 por ESP32 em placa de
 desenvolvimento para validar movimento, interface e ciclo sem depender da montagem da PCB.
 
+Documentação: **[proposta do projeto](docs/proposta.md)** · [o projeto explicado](docs/projeto.md) ·
+[sensores](docs/sensores.md) · [bases de dados](docs/datasets.md) ·
+[experimento](docs/pos-colheita.md) · [ensaio de velocidade](docs/ensaio-velocidade.md) ·
+[mecânica](docs/mecanica.md) · [montagem](docs/montagem.md)
+
 ## Estado
 
 Nada validado em hardware ainda. O primeiro teste pendente é o de velocidade, descrito em
@@ -74,7 +79,8 @@ Dois nós. A máquina e a câmara são independentes e publicam no mesmo broker.
 | Controlador | ESP32 WROOM-32 (a segunda placa) | |
 | Massa | Célula de carga 5 kg + HX711 | Perda de massa é a métrica primária de conservação. Contínua em vez de pesagem diária |
 | Temperatura e umidade | DHT22 ou SHT31 | Condição de estocagem, variável de confusão a controlar |
-| CO2 | MH-Z19B (opcional) | Taxa respiratória é o indicador fisiológico de amadurecimento, e o revestimento age justamente modificando troca gasosa |
+| Luz | BH1750 | Feature do dataset público escolhido, e custa R$ 15 |
+| CO2 | MH-Z19B (não comprado) | Mediria a taxa respiratória. Ausente por custo, tratado por ablação de feature. Ver `docs/datasets.md` |
 | Imagem | Celular em posição fixa | Cor e deterioração. Grátis e com qualidade melhor que ESP32-CAM |
 
 Ver `docs/pos-colheita.md`.
