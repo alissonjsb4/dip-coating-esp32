@@ -109,6 +109,8 @@ Nada validado em hardware ainda. O próximo passo é o ensaio de velocidade desc
 | `docs/projeto.md` | este documento |
 | `docs/sensores.md` | o que cada sensor mede e por quê |
 | `docs/datasets.md` | bases de dados públicas e a nossa |
+| `docs/materiais.md` | lista de materiais e onde comprar |
+| `docs/passo-a-passo.md` | guia de montagem, na ordem certa |
 | `docs/pos-colheita.md` | desenho do experimento |
 | `docs/ensaio-velocidade.md` | procedimento do teste de bancada |
 | `docs/mecanica.md` | peças 3D a fazer |

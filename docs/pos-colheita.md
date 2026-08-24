@@ -68,23 +68,31 @@ mais barata, então é a melhor para o lote 1.
 
 ## Formulações
 
-O laboratório **não** fornece quitosana nem alginato, e as professoras liberaram formulação
-alternativa para protótipo e demonstração. Isso não é concessão: amido e gelatina constam da
-própria literatura de revestimento comestível, nas famílias de polissacarídeos e proteínas.
+O laboratório não fornece os insumos, mas todos são adquiríveis por fora. As professoras
+liberaram formulação alternativa para protótipo, o que garante o piso; a quitosana entra como
+alvo principal porque é o padrão da literatura e tem ação antifúngica.
 
 | Formulação | Insumo | Onde | Estimativa |
 |---|---|---|---|
-| Base amido | amido de milho gelatinizado, com glicerina como plastificante | supermercado e farmácia | R$ 10 |
-| Base gelatina | gelatina incolor sem sabor | supermercado | R$ 5 |
+| Quitosana | quitosana em pó + ácido acético + glicerina | **Polymar, Fortaleza** | amostra, ou R$ 40-80 |
+| Alginato | alginato de sódio + cloreto de cálcio | gastronomia molecular | R$ 50-65 |
+| Base amido | amido de milho gelatinizado + glicerina | supermercado e farmácia | R$ 10 |
+| Base gelatina | gelatina incolor sem sabor + glicerina | supermercado | R$ 5 |
 | Base lipídica | cera de carnaúba em grau alimentício | a confirmar | a confirmar |
+
+A [Polymar](https://www.polymar.com.br/) fabrica quitosana em Fortaleza, na Rua Manoel Arruda
+980, Barroso, a partir de carapaça de crustáceo da pesca cearense. Pedir amostra é o primeiro
+movimento, porque é o item de maior prazo de resposta. Saída imediata se travar: quitosana em
+cápsula de suplemento, R$ 40 por 60 g de pó grau alimentício.
 
 A cera de carnaúba é a de maior interesse porque consta da lista de lipídios da literatura e
 é produto do Ceará. Só entra se aparecer em grau alimentício; a de uso em polimento costuma
 levar solvente e está fora.
 
-**Ressalva honesta a registrar no relatório:** a quitosana tem ação antifúngica que amido e
-gelatina não têm. Por isso a métrica principal é perda de massa, que responde a qualquer
-filme barreira, e decaimento por fungo entra como observação e não como resultado central.
+**Ressalva a registrar no relatório:** amido e gelatina não têm a ação antifúngica da
+quitosana. A métrica principal continua sendo perda de massa, que responde a qualquer filme
+barreira. Se a quitosana entrar, a comparação entre ela e as formulações sem ação antifúngica
+vira um resultado a mais, em vez de uma limitação.
 
 ## Massa de filme depositado
 

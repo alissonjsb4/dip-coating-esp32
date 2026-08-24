@@ -15,6 +15,7 @@ desenvolvimento para validar movimento, interface e ciclo sem depender da montag
 
 Documentação: **[proposta do projeto](docs/proposta.md)** · [o projeto explicado](docs/projeto.md) ·
 [sensores](docs/sensores.md) · [bases de dados](docs/datasets.md) ·
+[materiais](docs/materiais.md) · [passo a passo](docs/passo-a-passo.md) ·
 [experimento](docs/pos-colheita.md) · [ensaio de velocidade](docs/ensaio-velocidade.md) ·
 [mecânica](docs/mecanica.md) · [montagem](docs/montagem.md)
 

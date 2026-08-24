@@ -138,11 +138,15 @@ duas placas ESP32, acesso a solda e a impressora 3D.
 sensor de luminosidade, chave de fim de curso e material de montagem. Estimativa abaixo de
 R$ 200.
 
-**Formulações.** Amido de milho gelatinizado e gelatina incolor, ambos de grau alimentício e
-de aquisição direta. Não há dependência de insumo laboratorial.
+**Formulações.** Quitosana como formulação principal, obtida junto à Polymar, fabricante
+sediado em Fortaleza que a produz a partir de carapaça de crustáceo proveniente da pesca
+cearense. Alginato de sódio como segunda formulação. Amido de milho e gelatina como
+formulações de piso, de aquisição imediata e sem dependência de fornecedor, garantindo que o
+cronograma não fique refém do insumo.
 
-**A confirmar.** Empréstimo de sensor de CO2, e disponibilidade de cera de carnaúba em grau
-alimentício, que seria uma terceira formulação de interesse regional.
+**A confirmar.** Fornecimento ou amostra de quitosana pela Polymar, empréstimo de sensor de
+CO2, e disponibilidade de cera de carnaúba em grau alimentício, que seria uma quarta
+formulação de interesse regional.
 
 ## 11. Riscos e mitigação
 
@@ -152,7 +156,8 @@ alimentício, que seria uma terceira formulação de interesse regional.
 | Atraso na montagem mecânica | Primeiro lote aplicado manualmente, sem dependência do hardware |
 | Janela curta para ensaios de prateleira | Banana no primeiro lote, por amadurecimento rápido e custo baixo |
 | Ausência do sensor de CO2 | Ablação da feature, com o custo de performance quantificado |
-| Formulação com efeito menor que o de quitosana | Perda de massa, que é a métrica primária, responde a qualquer filme barreira. O que a quitosana acrescenta é ação antifúngica, e por isso decaimento por fungo não é usado como métrica principal |
+| Insumo de revestimento indisponível | Quatro formulações escalonadas por facilidade de aquisição; amido e gelatina são compradas no supermercado e garantem o piso do cronograma |
+| Formulação sem ação antifúngica | Perda de massa, a métrica primária, responde a qualquer filme barreira. Decaimento por fungo entra como observação, não como resultado central |
 | Deriva térmica da célula de carga | Correção pela temperatura, medida na mesma câmara |
 
 ## 12. Repositório
