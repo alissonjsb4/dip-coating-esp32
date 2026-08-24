@@ -42,7 +42,7 @@ stepper:
     step_pin: ${pino_step}
     dir_pin: ${pino_dir}
     sleep_pin: ${pino_sleep}
-    max_speed: 200 steps/s
+    max_speed: 2000 steps/s
     # Sem aceleracao: o teste mede velocidade constante. Rampa mascara o resultado.
     acceleration: inf
     deceleration: inf
@@ -61,7 +61,7 @@ number:
     id: passos_por_segundo
     optimistic: true
     min_value: 1
-    max_value: 1000
+    max_value: 3000
     step: 1
     initial_value: 100
     on_value:
