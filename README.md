@@ -1,9 +1,15 @@
 # dip-coating-esp32
 
-Controlador de uma máquina de dip coating (revestimento por imersão) de eixo único, rodando
-ESPHome em ESP32, com telemetria e comando por MQTT.
+Sistema de conservação pós-colheita: uma máquina de dip coating de eixo único aplica
+revestimento comestível em fruta com velocidade de retirada controlada, e uma câmara
+instrumentada acompanha a fruta revestida ao longo dos dias. Dois nós ESP32 rodando ESPHome,
+telemetria por MQTT.
 
-Deriva do projeto [ClubeDoHardware/dip-coating-cdh](https://github.com/ClubeDoHardware/dip-coating-cdh),
+O controle da velocidade de retirada é o ponto: mergulhar fruta na mão dá espessura de filme
+diferente a cada amostra, e a espessura escala com a velocidade de retirada elevada a 2/3
+(Landau-Levich). A máquina existe para fixar essa variável.
+
+A parte mecânica deriva do projeto [ClubeDoHardware/dip-coating-cdh](https://github.com/ClubeDoHardware/dip-coating-cdh),
 da UFC, que usa STM32 em PCB própria. Esta versão troca o STM32 por ESP32 em placa de
 desenvolvimento para validar movimento, interface e ciclo sem depender da montagem da PCB.
 
@@ -19,6 +25,8 @@ Nada validado em hardware ainda. O primeiro teste pendente é o de velocidade, d
 | LCD ST7920 respondendo em 3,3 V | não testado |
 | Encoder e menu | não iniciado |
 | Ciclo completo com MQTT | não iniciado |
+| Câmara instrumentada (massa, temperatura, UR) | não iniciado |
+| Primeiro lote de fruta revestida | não iniciado |
 
 ## Uso
 
@@ -46,14 +54,30 @@ e medir o deslocamento com régua. Repetir para 25, 50, 100, 200 e 400 passos/s.
 
 ## Hardware
 
+Dois nós. A máquina e a câmara são independentes e publicam no mesmo broker.
+
+### Nó 1: máquina de revestimento
+
 | Função | Componente |
 |---|---|
-| Controlador | ESP32-DevKitC V4 (WROOM-32). Uma placa WROOM-32 genérica serve de reserva |
+| Controlador | ESP32-DevKitC V4 (WROOM-32) |
 | Driver de passo | A4988 ou compatível step/dir (DRV8825, TMC2209) |
 | Motor | NEMA 17 |
 | Eixo | Atuador linear |
 | Interface | RepRapDiscount Full Graphic Smart Controller (ST7920 + encoder + buzzer) |
 | Segurança | Chave de fim de curso |
+
+### Nó 2: câmara de armazenamento
+
+| Função | Componente | Por quê |
+|---|---|---|
+| Controlador | ESP32 WROOM-32 (a segunda placa) | |
+| Massa | Célula de carga 5 kg + HX711 | Perda de massa é a métrica primária de conservação. Contínua em vez de pesagem diária |
+| Temperatura e umidade | DHT22 ou SHT31 | Condição de estocagem, variável de confusão a controlar |
+| CO2 | MH-Z19B (opcional) | Taxa respiratória é o indicador fisiológico de amadurecimento, e o revestimento age justamente modificando troca gasosa |
+| Imagem | Celular em posição fixa | Cor e deterioração. Grátis e com qualidade melhor que ESP32-CAM |
+
+Ver `docs/pos-colheita.md`.
 
 ## Pinos
 
@@ -106,6 +130,14 @@ acionam STEP e DIR sem conversor.
   para o mapeamento não precisar mudar quando a interface entrar.
 - Pull-up externo no EN do driver: sem ele o pino fica em alta impedância durante o boot e o
   A4988, que habilita em nível baixo, pode energizar a bobina antes do firmware subir.
+- Dois nós em vez de um: a câmara fica ligada por semanas e a máquina é usada por minutos.
+  Separar evita que um reflash da máquina interrompa um ensaio em curso.
+- Célula de carga em vez de pesagem manual: perda de massa é a métrica primária, e medir
+  continuamente troca seis pontos por fruta por milhares. É o que torna o dataset próprio
+  viável dentro do semestre.
+- Primeiro lote mergulhado à mão: o ensaio de prateleira leva de uma a três semanas, então a
+  coleta começa em setembro sem esperar a máquina. O ganho de reprodutibilidade da máquina
+  vira comparação entre lotes, o que é resultado em vez de pressuposto.
 
 ## Licença
 
