@@ -1,23 +1,17 @@
 # dip-coating-esp32
 
-Sistema de conservação pós-colheita: uma máquina de dip coating de eixo único aplica
-revestimento comestível em fruta com velocidade de retirada controlada, e uma câmara
-instrumentada acompanha a fruta revestida ao longo dos dias. Dois nós ESP32 rodando ESPHome,
-telemetria por MQTT.
+Controlador de uma máquina de dip coating (revestimento por imersão) de eixo único, rodando
+ESPHome em ESP32, com telemetria e comando por MQTT. Velocidade de retirada programável de
+1 a 200 mm/min, tempo de imersão e número de ciclos configuráveis, operação local por display
+e encoder.
 
-O controle da velocidade de retirada é o ponto: mergulhar fruta na mão dá espessura de filme
-diferente a cada amostra, e a espessura escala com a velocidade de retirada elevada a 2/3
-(Landau-Levich). A máquina existe para fixar essa variável.
-
-A parte mecânica deriva do projeto [ClubeDoHardware/dip-coating-cdh](https://github.com/ClubeDoHardware/dip-coating-cdh),
+Deriva do projeto [ClubeDoHardware/dip-coating-cdh](https://github.com/ClubeDoHardware/dip-coating-cdh),
 da UFC, que usa STM32 em PCB própria. Esta versão troca o STM32 por ESP32 em placa de
 desenvolvimento para validar movimento, interface e ciclo sem depender da montagem da PCB.
 
-Documentação: **[proposta do projeto](docs/proposta.md)** · [o projeto explicado](docs/projeto.md) ·
-[sensores](docs/sensores.md) · [bases de dados](docs/datasets.md) ·
-[materiais](docs/materiais.md) · [passo a passo](docs/passo-a-passo.md) ·
-[experimento](docs/pos-colheita.md) · [ensaio de velocidade](docs/ensaio-velocidade.md) ·
-[mecânica](docs/mecanica.md) · [montagem](docs/montagem.md)
+Documentação: [materiais](docs/materiais.md) · [passo a passo](docs/passo-a-passo.md) ·
+[ensaio de velocidade](docs/ensaio-velocidade.md) · [mecânica](docs/mecanica.md) ·
+[montagem](docs/montagem.md)
 
 ## Estado
 
@@ -28,12 +22,10 @@ Nada validado em hardware ainda. O primeiro teste pendente é o de velocidade, d
 |---|---|
 | Motor girando com A4988 sob ESPHome | não testado |
 | Velocidade pedida contra velocidade medida | não medido |
+| Passos por milímetro calibrados | não medido |
 | LCD ST7920 respondendo em 3,3 V | não testado |
 | Encoder e menu | não iniciado |
 | Ciclo completo com MQTT | não iniciado |
-| Câmara instrumentada (massa, temperatura, UR) | não iniciado |
-| Primeiro lote de fruta revestida | não iniciado |
-| Curva de massa de filme contra velocidade | não medida |
 
 ## Uso
 
@@ -56,36 +48,18 @@ mosquitto_pub -h <broker> -t 'dipcoat/button/mover/command' -m 'PRESS'
 mosquitto_pub -h <broker> -t 'dipcoat/button/voltar/command' -m 'PRESS'
 ```
 
-Procedimento de medição: marcar o carro, comandar um número conhecido de passos, cronometrar
-e medir o deslocamento com régua. Repetir para 25, 50, 100, 200 e 400 passos/s.
+Procedimento em `docs/ensaio-velocidade.md`.
 
 ## Hardware
-
-Dois nós. A máquina e a câmara são independentes e publicam no mesmo broker.
-
-### Nó 1: máquina de revestimento
 
 | Função | Componente |
 |---|---|
 | Controlador | ESP32-DevKitC V4 (WROOM-32) |
 | Driver de passo | A4988 ou compatível step/dir (DRV8825, TMC2209) |
 | Motor | NEMA 17 |
-| Eixo | Atuador linear |
+| Eixo | Atuador linear OpenBuilds |
 | Interface | RepRapDiscount Full Graphic Smart Controller (ST7920 + encoder + buzzer) |
-| Segurança | Chave de fim de curso |
-
-### Nó 2: câmara de armazenamento
-
-| Função | Componente | Por quê |
-|---|---|---|
-| Controlador | ESP32 WROOM-32 (a segunda placa) | |
-| Massa | Célula de carga 1 kg + HX711 | Perda de massa é a métrica primária de conservação. Contínua em vez de pesagem diária |
-| Temperatura e umidade | DHT22 ou SHT31 | Condição de estocagem, variável de confusão a controlar |
-| Luz | BH1750 | Feature do dataset público escolhido, e custa R$ 15 |
-| CO2 | MH-Z19B (não comprado) | Mediria a taxa respiratória. Ausente por custo, tratado por ablação de feature. Ver `docs/datasets.md` |
-| Imagem | Celular em posição fixa | Cor e deterioração. Grátis e com qualidade melhor que ESP32-CAM |
-
-Ver `docs/pos-colheita.md`.
+| Segurança | Chave de fim de curso em contato normalmente fechado |
 
 ## Pinos
 
@@ -129,23 +103,24 @@ acionam STEP e DIR sem conversor.
   pedida, o stack inteiro muda, e isso precisa ser descoberto no início e não no fim.
 - `sleep_pin` em vez de `enable_pin`: é o nome que o componente a4988 do ESPHome usa. O EN do
   driver é acionado separado, por GPIO comum.
-- Faixa de operação alvo de 1 a 200 mm/min, herdada do projeto original. É regime de baixa
-  velocidade, onde a limitação conhecida de frequência do a4988 no ESPHome
-  ([esphome/issues#3297](https://github.com/esphome/issues/issues/3297)) tende a não atrapalhar.
-- LCD alimentado em 5 V com lógica de 3,3 V do ESP32: funciona na maioria dos relatos, mas é
-  risco conhecido. Se não responder, entra level shifter.
+- A faixa de 1 a 200 mm/min fica **abaixo** do regime clássico de drenagem de Landau-Levich,
+  que vai de 1 a 10 mm/s, ou seja, 60 a 600 mm/min. Nessa região a evaporação domina e a
+  espessura volta a subir conforme a velocidade cai. A curva completa tem forma de U, com
+  mínimo na transição entre os dois regimes, e a faixa da máquina atravessa essa transição.
+  Não esperar reta no ensaio de espessura.
 - Pinos escolhidos fora dos strapping pins e com GPIO18 e 23 reservados para o SPI do LCD,
   para o mapeamento não precisar mudar quando a interface entrar.
 - Pull-up externo no EN do driver: sem ele o pino fica em alta impedância durante o boot e o
   A4988, que habilita em nível baixo, pode energizar a bobina antes do firmware subir.
-- Dois nós em vez de um: a câmara fica ligada por semanas e a máquina é usada por minutos.
-  Separar evita que um reflash da máquina interrompa um ensaio em curso.
-- Célula de carga em vez de pesagem manual: perda de massa é a métrica primária, e medir
-  continuamente troca seis pontos por fruta por milhares. É o que torna o dataset próprio
-  viável dentro do semestre.
-- Primeiro lote mergulhado à mão: o ensaio de prateleira leva de uma a três semanas, então a
-  coleta começa em setembro sem esperar a máquina. O ganho de reprodutibilidade da máquina
-  vira comparação entre lotes, o que é resultado em vez de pressuposto.
+- Construir dip coater de baixo custo não é novidade: há trabalhos publicados com custo de
+  material entre 50 e 100 dólares, contra milhares de um equipamento comercial de entrada.
+  O que este repositório acrescenta é conectividade e telemetria, que os publicados não têm.
+
+## Arquivo
+
+`docs/arquivo/` guarda o material de uma tentativa de usar a máquina como projeto de
+disciplina, em conservação pós-colheita de fruta. A equipe seguiu outro tema. O levantamento
+continua válido e está preservado.
 
 ## Licença
 

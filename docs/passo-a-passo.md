@@ -1,9 +1,5 @@
 # Guia de montagem, passo a passo
 
-Ordem deliberada: **a câmara vem antes da máquina.** A câmara fica pronta numa tarde e começa
-a coletar dado em setembro, com o lote mergulhado à mão. A máquina leva semanas. Quem
-inverter a ordem chega em dezembro com dois lotes em vez de cinco.
-
 Ler `montagem.md` antes de encostar em fio.
 
 ---
@@ -18,56 +14,7 @@ Ler `montagem.md` antes de encostar em fio.
    As peças impressas saem dessas medidas, não do modelo antigo.
 4. Confirmar o **passo do fuso** do atuador. Define passos por milímetro e todo o ensaio de
    velocidade. Se for TR8x8, são 8 mm por volta.
-5. Contatar a Polymar sobre amostra de quitosana. É o item com maior prazo de resposta, então
-   é o primeiro a disparar.
 
----
-
-## Fase 1 — Câmara (uma tarde)
-
-### 1.1 Suporte da célula de carga
-
-Imprimir duas chapinhas e parafusar a célula em balanço entre elas: a base fixa embaixo, o
-prato da fruta em cima. É o padrão de montagem de célula de carga tipo barra. A célula precisa
-poder fletir, então nenhuma das pontas pode encostar em nada além dos parafusos.
-
-Base rígida, presa no fundo da caixa. Vibração vira ruído.
-
-### 1.2 Ligação
-
-Célula de carga no HX711 pelos quatro fios coloridos, seguindo a serigrafia do módulo.
-HX711 no ESP32: VCC em 3,3 V, GND, DT e SCK em dois GPIO livres. DHT22 e BH1750 em seguida,
-o BH1750 no barramento I2C.
-
-Tudo em placa perfurada soldada, com barra de pinos fêmea para o ESP32. Nada de protoboard,
-porque a câmara vai ficar ligada semanas.
-
-### 1.3 Firmware
-
-Config ESPHome com `hx711`, `dht` e `bh1750`, publicando por MQTT. Intervalo de amostragem de
-1 minuto é suficiente e não enche o banco à toa.
-
-### 1.4 Calibração da célula
-
-1. Com o prato vazio, zerar (tara).
-2. Pôr uma massa conhecida. Moeda serve: moeda de 1 real pesa 7 g, a de 50 centavos pesa 7,81 g.
-   Melhor ainda é usar a balança de precisão para pesar um objeto e usá-lo como padrão.
-3. Ajustar o fator de calibração até a leitura bater.
-4. Repetir com uma segunda massa para conferir linearidade.
-
-### 1.5 Ensaio em branco
-
-Antes de pôr fruta, deixar a câmara rodando 48 horas com um objeto inerte de massa parecida,
-tipo um pote com água fechado. Isso mede a **deriva** do sistema: quanto a leitura muda sozinha
-por causa de temperatura e do próprio sensor.
-
-Sem esse branco, você não sabe separar perda de massa da fruta de deriva do instrumento. É a
-etapa que a maioria pula e depois não consegue defender o resultado.
-
-### 1.6 Posição da foto
-
-Marcar com fita no chão e na parede onde o celular fica. Mesma distância, mesmo ângulo, mesma
-iluminação, toda vez. Foto diária.
 
 ---
 
@@ -142,61 +89,16 @@ Repetir três vezes. Esse número converte passos em mm/min e é o que valida a 
 
 ---
 
-## Fase 5 — Revestimento e ensaio
-
-### 5.1 Preparo das soluções
-
-**Quitosana.** 1 a 2 g de quitosana em pó para 100 ml de solução de ácido acético a 1%
-(vinagre branco diluído 1:4 em água serve). Agitar até dissolver, o que leva tempo. Adicionar
-glicerina a 0,5%, como plastificante. Filtrar em pano fino ou peneira.
-
-**Alginato.** 1 a 2 g de alginato para 100 ml de água. Aplicar e depois borrifar solução de
-cloreto de cálcio a 1% para reticular.
-
-**Amido.** 2 a 3 g de amido de milho para 100 ml de água, aquecer até gelatinizar, deixar
-esfriar. Glicerina a 0,5%.
-
-**Gelatina.** Conforme a embalagem, mais glicerina a 0,5%.
-
-Preparar sempre no mesmo dia do uso, e registrar concentração e lote.
-
-### 5.2 Curva de massa de filme
-
-Antes da fruta, com lâmina de vidro:
-
-1. Pesar a lâmina limpa e seca na balança de precisão.
-2. Revestir na máquina, com velocidade conhecida.
-3. Secar completamente e pesar de novo.
-4. Repetir para 10, 25, 50, 100 e 200 mm/min, três lâminas por velocidade.
-
-A curva de massa depositada contra velocidade valida Landau-Levich, que é a premissa que
-sustenta o projeto inteiro. Não depende de fruta nem de calendário biológico, e sai numa tarde.
-
-### 5.3 Ensaio de prateleira
-
-1. Comprar fruta do mesmo lote, mesmo estágio de maturação, tamanho parecido.
-2. Lavar, secar, pesar e etiquetar cada uma.
-3. Separar em grupos: controle sem revestimento, e um grupo por combinação de formulação e
-   velocidade.
-4. Revestir, secar e colocar na câmara. Uma fruta fica na célula de carga; as outras são
-   pesadas na mão uma vez por dia.
-5. Foto diária, na posição marcada.
-6. Registrar tudo numa planilha com identificador de fruta, lote e tratamento.
-
-O **lote 1 vai mergulhado à mão**, em setembro, antes da máquina. Ele é ao mesmo tempo o
-destravamento da coleta e o termo de comparação de variância contra os lotes automatizados.
-
----
-
 ## Resumo da ordem
 
 | Fase | Depende de | Prazo |
 |---|---|---|
 | 0 Compras e medidas | nada | primeira semana |
-| 1 Câmara | célula de carga chegar | uma tarde |
 | 2 Bancada do motor | driver chegar | uma tarde |
 | 3 Mecânica | Fase 2 aprovar | duas semanas |
 | 4 Interface | Fase 3 | uma semana |
-| 5 Ensaios | Fase 1 para o lote 1 | contínuo desde setembro |
 
-Fases 1 e 2 são independentes e podem correr em paralelo, com pessoas diferentes.
+A Fase 2 é o ponto de decisão. Nada de mecânica antes dela aprovar.
+
+O ensaio de massa de filme em lâmina de vidro, que levanta a curva de espessura contra
+velocidade, está descrito em `arquivo/pos-colheita.md`.
