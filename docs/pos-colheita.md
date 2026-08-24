@@ -32,7 +32,7 @@ A máquina fixa essa variável. É a resposta para "por que não faz na mão".
 
 | Grandeza | Sensor | Estimativa | Prioridade |
 |---|---|---|---|
-| Massa | Célula de carga 5 kg + HX711 | R$ 30-45 | essencial |
+| Massa | Célula de carga 1 kg + HX711 | R$ 30-45 | essencial |
 | Temperatura e umidade | DHT22 (ou SHT31, mais preciso) | R$ 25-40 | essencial |
 | CO2 | MH-Z19B NDIR | R$ 150-200 | eleva muito, mas é opcional |
 | Imagem | Celular em suporte fixo | R$ 0 | essencial |
@@ -92,6 +92,6 @@ Para validar Landau-Levich sem depender da fruta: revestir lâminas de vidro em 
 diferentes, pesar antes e depois, e levantar a curva de massa depositada contra velocidade.
 
 O filme numa lâmina pesa dezenas de miligramas, o que **não** é resolvível pela célula de
-carga de 5 kg da câmara. Usar uma balança de precisão de 0,01 g, que custa R$ 25 a 40.
+carga de 1 kg da câmara. Usar uma balança de precisão de 0,01 g, que custa R$ 25 a 40.
 Esse ensaio é barato, rápido, independe do calendário biológico e transforma a premissa
 teórica em resultado medido.

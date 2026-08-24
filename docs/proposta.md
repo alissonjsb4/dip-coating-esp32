@@ -61,7 +61,7 @@ tratada, empregando um modelo de inteligência computacional para prever deterio
 ## 5. Justificativa
 
 O sistema ataca a lacuna descrita fixando a variável solta, e o faz com hardware de
-prateleira. O custo estimado de sensoriamento adicional fica abaixo de R$ 120, contra
+prateleira. O custo estimado de sensoriamento adicional fica em torno de R$ 150, contra
 milhares de reais de um equipamento comercial.
 
 Do ponto de vista das disciplinas, o projeto percorre a cadeia completa que o Projeto
@@ -76,7 +76,7 @@ Dois nós ESP32 independentes, ambos rodando ESPHome e publicando em um broker M
 sobre atuador linear, interface local com display ST7920 e encoder rotativo, chave de fim de
 curso em contato normalmente fechado. Publica velocidade comandada, posição e estado do ciclo.
 
-**Nó 2, câmara de armazenamento.** ESP32 WROOM-32, célula de carga de 5 kg com HX711,
+**Nó 2, câmara de armazenamento.** ESP32 WROOM-32, célula de carga de 1 kg com HX711,
 sensor de temperatura e umidade, sensor de luminosidade. Publica série temporal contínua.
 
 A separação em dois nós é deliberada: a câmara opera por semanas ininterruptas enquanto a
