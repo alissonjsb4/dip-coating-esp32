@@ -36,7 +36,9 @@ Com o firmware rodando, no broker MQTT:
 ```
 mosquitto_sub -h <broker> -t 'dipcoat/#' -v
 mosquitto_pub -h <broker> -t 'dipcoat/number/passos_por_segundo/command' -m '200'
-mosquitto_pub -h <broker> -t 'dipcoat/button/mover_1000_passos/command' -m 'PRESS'
+mosquitto_pub -h <broker> -t 'dipcoat/number/passos_do_ensaio/command' -m '2000'
+mosquitto_pub -h <broker> -t 'dipcoat/button/mover/command' -m 'PRESS'
+mosquitto_pub -h <broker> -t 'dipcoat/button/voltar/command' -m 'PRESS'
 ```
 
 Procedimento de medição: marcar o carro, comandar um número conhecido de passos, cronometrar
@@ -46,15 +48,39 @@ e medir o deslocamento com régua. Repetir para 25, 50, 100, 200 e 400 passos/s.
 
 | Função | Componente |
 |---|---|
-| Controlador | ESP32 DevKit |
+| Controlador | ESP32-DevKitC V4 (WROOM-32). Uma placa WROOM-32 genérica serve de reserva |
 | Driver de passo | A4988 ou compatível step/dir (DRV8825, TMC2209) |
 | Motor | NEMA 17 |
 | Eixo | Atuador linear |
 | Interface | RepRapDiscount Full Graphic Smart Controller (ST7920 + encoder + buzzer) |
 | Segurança | Chave de fim de curso |
 
-Mapeamento de pinos ainda não definido. Os pinos em `bancada-motor.yaml` são provisórios e
-serão fixados depois do teste de bancada.
+## Pinos
+
+Escolhidos fora dos strapping pins do ESP32 (GPIO0, 2, 5, 12, 15), fora dos pinos de flash
+(GPIO6 a 11) e fora da UART0 (GPIO1, 3). Os pinos de entrada apenas (GPIO34 a 39) não são
+usados para saída.
+
+| Sinal | GPIO | Observação |
+|---|---|---|
+| STEP | 26 | |
+| DIR | 27 | |
+| SLEEP | 25 | |
+| EN | 33 | ativo em nível baixo, precisa de pull-up externo |
+| LCD SCLK | 18 | reservado, VSPI |
+| LCD MOSI | 23 | reservado, VSPI |
+| LCD CS | 22 | reservado |
+| Encoder A | 32 | reservado |
+| Encoder B | 21 | reservado |
+| Encoder botão | 19 | reservado |
+| Fim de curso | 4 | reservado, pull-up interno |
+
+O EN do A4988 é ativo em nível baixo e o GPIO fica em alta impedância durante o boot. Sem um
+pull-up de 10k entre EN e VCC, o driver pode energizar a bobina antes do firmware subir.
+
+Alimentação do motor vem da fonte direto no VMOT do driver, nunca do regulador da placa, com
+terra comum entre fonte e ESP32. O A4988 aceita lógica de 3 a 5,5 V, então os 3,3 V do ESP32
+acionam STEP e DIR sem conversor.
 
 ## Notas
 
@@ -76,6 +102,10 @@ serão fixados depois do teste de bancada.
   ([esphome/issues#3297](https://github.com/esphome/issues/issues/3297)) tende a não atrapalhar.
 - LCD alimentado em 5 V com lógica de 3,3 V do ESP32: funciona na maioria dos relatos, mas é
   risco conhecido. Se não responder, entra level shifter.
+- Pinos escolhidos fora dos strapping pins e com GPIO18 e 23 reservados para o SPI do LCD,
+  para o mapeamento não precisar mudar quando a interface entrar.
+- Pull-up externo no EN do driver: sem ele o pino fica em alta impedância durante o boot e o
+  A4988, que habilita em nível baixo, pode energizar a bobina antes do firmware subir.
 
 ## Licença
 

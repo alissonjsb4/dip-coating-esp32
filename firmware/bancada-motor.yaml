@@ -2,14 +2,19 @@
 # Nao usa LCD nem encoder. Objetivo unico e responder se o stepper do ESPHome
 # sustenta velocidade constante na faixa de dip coating (1 a 200 mm/min).
 #
-# Pinos provisorios. Fixar depois do teste.
+# Pinos escolhidos fora dos strapping pins do ESP32 (0, 2, 5, 12, 15) e longe de
+# GPIO18/23, reservados para o SPI do LCD.
+#
+# ATENCAO: o EN do A4988 e ativo em nivel baixo. Durante o boot o GPIO fica em alta
+# impedancia, entao sem pull-up externo de 10k entre EN e VCC o driver pode energizar
+# a bobina e mover o motor antes do firmware subir.
 
 substitutions:
   nome: dipcoat
-  pino_step: GPIO17
-  pino_dir: GPIO18
-  pino_sleep: GPIO19
-  pino_enable: GPIO16
+  pino_step: GPIO26
+  pino_dir: GPIO27
+  pino_sleep: GPIO25
+  pino_enable: GPIO33
 
 esphome:
   name: ${nome}
